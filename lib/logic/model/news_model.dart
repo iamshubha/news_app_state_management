@@ -8,10 +8,4 @@ class NewsModel {
       : this.author = json['author'],
         this.urlToImage = json['urlToImage'],
         this.title = json['title'];
-
-  Map<String, dynamic> toJson() => {
-    "author": this.author,
-    "url_to_image": this.urlToImage,
-    "title": this.title,
-  };
 }

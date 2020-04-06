@@ -13,7 +13,6 @@ class NewsBloc {
     var dataString = await loadAsset();
     Map<String, dynamic> jsonUserData = jsonDecode(dataString);
     users = NewsList.fromJson(jsonUserData['articles']).newsList;
-    print('done loading user!' + jsonEncode(users));
     return users;
   }
 
