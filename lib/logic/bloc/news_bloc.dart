@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:flutterapp/logic/model/news_model.dart';
+import 'package:flutterapp/logic/repository/news_list.dart';
 import 'package:http/http.dart' as http;
 
 class NewsBloc {
@@ -21,31 +23,4 @@ class NewsBloc {
 
     return response.body;
   }
-}
-
-class NewsModel {
-  final String author, urlToImage, title;
-
-  const NewsModel(this.author, this.urlToImage, this.title);
-
-  NewsModel.fromJson(Map<String, dynamic> json)
-      : this.author = json['author'],
-        this.urlToImage = json['urlToImage'],
-        this.title = json['title'];
-
-  Map<String, dynamic> toJson() => {
-        "author": this.author,
-        "url_to_image": this.urlToImage,
-        "title": this.title,
-      };
-}
-
-class NewsList {
-  final List<NewsModel> newsList;
-
-  NewsList(this.newsList);
-
-  NewsList.fromJson(List<dynamic> usersJson)
-      : newsList = usersJson.map(
-          (news) => NewsModel.fromJson(news)).toList();
 }

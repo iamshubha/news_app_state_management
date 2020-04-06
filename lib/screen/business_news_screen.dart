@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/logic/bloc/news_bloc.dart';
+import 'package:flutterapp/logic/model/news_model.dart';
 import 'package:provider/provider.dart';
 
 class BusinessNewsScreen extends StatelessWidget {
