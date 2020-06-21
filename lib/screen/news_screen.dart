@@ -4,12 +4,12 @@ import 'package:flutterapp/logic/bloc/news_bloc.dart';
 import 'package:flutterapp/tools/news_section.dart';
 import 'package:flutterapp/tools/title_widget.dart';
 
-class BusinessNewsScreen extends StatefulWidget {
+class NewsScreen extends StatefulWidget {
   @override
-  _BusinessNewsScreenState createState() => _BusinessNewsScreenState();
+  _NewsScreenState createState() => _NewsScreenState();
 }
 
-class _BusinessNewsScreenState extends State<BusinessNewsScreen> {
+class _NewsScreenState extends State<NewsScreen> {
   @override
   void initState() {
     super.initState();

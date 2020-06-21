@@ -27,6 +27,7 @@ class NewsSection extends StatelessWidget {
                     itemBuilder: (_, int index) => NewsItem(
                       newsTitle: snapShot.data.newsList[index].title,
                       newsPoster: snapShot.data.newsList[index].urlToImage,
+                      newsDescription: snapShot.data.newsList[index].description,
                     ),
                   )
                 : NewsLoader(),
