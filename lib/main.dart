@@ -4,6 +4,6 @@ import 'screen/details_screen.dart';
 main() => runApp(
       MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: DetailsScreen(),
+        home: NewsScreen(),
       ),
     );

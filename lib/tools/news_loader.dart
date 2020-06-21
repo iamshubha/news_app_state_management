@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/assets/url.dart';
 
 import 'news_item.dart';
 
@@ -10,9 +11,10 @@ class NewsLoader extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemCount: 5,
       itemBuilder: (_, int index) => NewsItem(
+        newsDescription: null,
         newsTitle: 'Loading',
         newsPoster:
-            'https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif',
+            loadingImage,
       ),
     );
   }

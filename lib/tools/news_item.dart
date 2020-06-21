@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/assets/url.dart';
 import 'package:flutterapp/screen/details_screen.dart';
 
 class NewsItem extends StatelessWidget {
@@ -20,20 +21,25 @@ class NewsItem extends StatelessWidget {
         vertical: 8.0,
         horizontal: 10.0,
       ),
-      child: GestureDetector(
-        onTap: () {
-          DetailsScreen(
-            image: newsPoster,
-            title: newsTitle,
-            description: newsDescription,
-          );
-        },
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          elevation: 20.0,
-          shadowColor: Colors.redAccent[100],
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        elevation: 20.0,
+        shadowColor: Colors.redAccent[100],
+        child: GestureDetector(
+          onTap: () {
+            print('tapped');
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => DetailsScreen(
+                  image: newsPoster == null ? loadingImage : newsPoster,
+                  title: newsTitle,
+                  description: newsDescription,
+                ),
+              ),
+            );
+          },
           child: Container(
             width: 200.0,
             child: Column(
@@ -42,7 +48,7 @@ class NewsItem extends StatelessWidget {
               children: [
                 newsPoster == null
                     ? Image.network(
-                        'https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif',
+                        loadingImage,
                         scale: 2.5,
                       )
                     : Image.network(
