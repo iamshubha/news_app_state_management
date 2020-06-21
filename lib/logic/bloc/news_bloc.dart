@@ -27,6 +27,7 @@ class NewsBloc{
 
   dispose() {
     _businessNewsSubject.close();
+    _sportsNewsSubject.close();
   }
 
   BehaviorSubject<NewsResponse> get businessSubject => _businessNewsSubject;
