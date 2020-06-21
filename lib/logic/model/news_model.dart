@@ -10,7 +10,7 @@ class NewsModel {
   );
 
   NewsModel.fromJSON(Map<String, dynamic> newsJSON)
-      : author = newsJSON['author'],
-        urlToImage = newsJSON['urlToImage'],
-        title = newsJSON['title'];
+      : author = newsJSON["author"],
+        urlToImage = newsJSON["urlToImage"],
+        title = newsJSON["title"];
 }
