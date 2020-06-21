@@ -10,11 +10,11 @@ main() => runApp(
       ),
     );
 
-class MyApp extends StatelessWidget{
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => FutureProvider(
-     lazy: true,
-      create: (BuildContext context) => NewsBloc().loadUserData(),
-      child: NewsScreen(),
-    );
+        lazy: true,
+        create: (BuildContext context) => NewsBloc().loadBusinessNews(),
+        child: NewsScreen(),
+      );
 }

@@ -4,19 +4,32 @@ import 'package:flutterapp/logic/repository/news_list.dart';
 import 'package:http/http.dart' as http;
 
 class NewsBloc {
-  final String newsUrl =
+  final String businessUrl =
       "https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=3fc464c420834d6fb76899f176e1ae6d";
 
-  List<NewsModel> users;
 
-  Future<List<NewsModel>> loadUserData() async {
-    var dataString = await loadAsset(newsUrl);
+  final String sportsUrl =
+      "https://newsapi.org/v2/top-headlines?country=in&category=sports&apiKey=3fc464c420834d6fb76899f176e1ae6d";
+
+  List<NewsModel> businessNews;
+
+  Future<List<NewsModel>> loadBusinessNews() async {
+    var dataString = await loadURL(businessUrl);
     Map<String, dynamic> jsonUserData = jsonDecode(dataString);
-    users = NewsList.fromJson(jsonUserData['articles']).newsList;
-    return users;
+    businessNews = NewsList.fromJson(jsonUserData['articles']).newsList;
+    return businessNews;
   }
 
-  Future<String> loadAsset(String url) async {
+  List<NewsModel> sportsNews;
+
+  Future<List<NewsModel>> loadSportsNews() async {
+    var dataString = await loadURL(sportsUrl);
+    Map<String, dynamic> jsonUserData = jsonDecode(dataString);
+    businessNews = NewsList.fromJson(jsonUserData['articles']).newsList;
+    return businessNews;
+  }
+
+  Future<String> loadURL(String url) async {
     var response = await http.get(Uri.encodeFull(url),
         headers: {"Accept": "application/json"});
     return response.body;
