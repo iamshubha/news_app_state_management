@@ -12,7 +12,7 @@ class NewsLoader extends StatelessWidget {
       itemCount: 5,
       itemBuilder: (_, int index) => NewsItem(
         newsDescription: null,
-        newsTitle: 'Loading',
+        newsTitle: 'Loading......',
         newsPoster:
             loadingImage,
       ),
