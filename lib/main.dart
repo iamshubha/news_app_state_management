@@ -12,9 +12,17 @@ main() => runApp(
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => FutureProvider(
-        lazy: true,
-        create: (BuildContext context) => NewsBloc().loadBusinessNews(),
+  Widget build(BuildContext context) => MultiProvider(
+        providers: [
+          FutureProvider(
+            lazy: true,
+            create: (BuildContext context) => NewsBloc().loadBusinessNews(),
+          ),
+          FutureProvider(
+            lazy: true,
+            create: (BuildContext context) => NewsBloc().loadSportsNews(),
+          ),
+        ],
         child: NewsScreen(),
       );
 }

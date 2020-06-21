@@ -20,13 +20,13 @@ class NewsBloc {
     return businessNews;
   }
 
-  List<NewsModel> sportsNews;
+  List<NewsModel1> sportsNews;
 
-  Future<List<NewsModel>> loadSportsNews() async {
+  Future<List<NewsModel1>> loadSportsNews() async {
     var dataString = await loadURL(sportsUrl);
     Map<String, dynamic> jsonUserData = jsonDecode(dataString);
-    businessNews = NewsList.fromJson(jsonUserData['articles']).newsList;
-    return businessNews;
+    sportsNews = NewsList1.fromJson(jsonUserData['articles']).newsList1;
+    return sportsNews;
   }
 
   Future<String> loadURL(String url) async {
