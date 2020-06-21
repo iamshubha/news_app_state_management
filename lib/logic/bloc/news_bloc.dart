@@ -10,16 +10,15 @@ class NewsBloc {
   List<NewsModel> users;
 
   Future<List<NewsModel>> loadUserData() async {
-    var dataString = await loadAsset();
+    var dataString = await loadAsset(newsUrl);
     Map<String, dynamic> jsonUserData = jsonDecode(dataString);
     users = NewsList.fromJson(jsonUserData['articles']).newsList;
     return users;
   }
 
-  Future<String> loadAsset() async {
-    var response = await http.get(Uri.encodeFull(newsUrl),
+  Future<String> loadAsset(String url) async {
+    var response = await http.get(Uri.encodeFull(url),
         headers: {"Accept": "application/json"});
-
     return response.body;
   }
 }
