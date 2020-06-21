@@ -14,62 +14,39 @@ class NewsScreen extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TitleWidget(title: 'Business'),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 140.0,
-                    child: news == null
-                        ? Center(
-                            child: Text('Loading'),
-                          )
-                        : Container(
-                      height: 400.0,
-                          width: MediaQuery.of(context).size.width,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: news.length == null ? 0 : news.length,
-                              itemBuilder: (_, int index) => Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Card(
-                                  elevation: 20.0,
-                                  child: Container(
-                                    width: 200.0,
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          height: 400.0,
-                                          child: news[index].urlToImage == null
-                                              ? Image.network(
-                                                  'https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif',
-                                                  fit: BoxFit.fill,
-
-                                                )
-                                              : Image.network(
-                                                  news[index].urlToImage,
-                                                  fit: BoxFit.contain,
-                                                  scale: 2.0,
-                                                ),
-                                        ),
-                                        SizedBox(
-                                          height: 20.0,
-                                        ),
-                                        Text(news[index].title),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TitleWidget(title: 'Business'),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 300.0,
+                  child: news == null
+                      ? ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 5,
+                          itemBuilder: (_, int index) => NewsItem(
+                            newsTitle: 'Loading',
+                            newsPoster:
+                                'https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif',
+                          ),
+                        )
+                      : ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: news.length == null ? 0 : news.length,
+                          itemBuilder: (_, int index) => NewsItem(
+                            newsTitle: news[index].title,
+                            newsPoster: news[index].urlToImage,
+                          ),
                         ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -99,6 +76,62 @@ class TitleWidget extends StatelessWidget {
           title,
           style: TextStyle(
             fontSize: 50.0,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class NewsItem extends StatelessWidget {
+  final String newsTitle;
+  final String newsPoster;
+
+  const NewsItem({
+    Key key,
+    @required this.newsTitle,
+    @required this.newsPoster,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        elevation: 20.0,
+        child: Container(
+          width: 200.0,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              newsPoster == null
+                  ? Image.network(
+                      'https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif',
+                      scale: 2.5,
+                    )
+                  : Image.network(
+                      newsPoster,
+                    ),
+              SizedBox(
+                height: 10.0,
+              ),
+              Expanded(
+                flex: 4,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 3.0),
+                  child: Text(
+                    newsTitle,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),
