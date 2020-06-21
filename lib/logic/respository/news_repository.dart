@@ -9,7 +9,6 @@ class NewsRepository {
   Future<NewsResponse> getNews(String url) async {
     var response = await http.get(Uri.encodeFull(url),
         headers: {"Accept": "application/json"});
-    print(json.decode(response.body));
     return NewsResponse.fromJSON(json.decode(response.body));
   }
 }

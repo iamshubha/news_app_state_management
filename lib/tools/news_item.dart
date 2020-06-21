@@ -29,7 +29,6 @@ class NewsItem extends StatelessWidget {
         shadowColor: Colors.redAccent[100],
         child: GestureDetector(
           onTap: () {
-            print('tapped');
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => DetailsScreen(
