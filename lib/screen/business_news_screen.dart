@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterapp/assets/url.dart';
 import 'package:flutterapp/logic/bloc/news_bloc.dart';
 import 'package:flutterapp/logic/model/news_model.dart';
 import 'package:flutterapp/logic/news_response.dart';
@@ -13,7 +14,7 @@ class _BusinessNewsScreenState extends State<BusinessNewsScreen> {
   @override
   void initState() {
     super.initState();
-    newsBloc..getBusinessNews();
+    newsBloc..getNews(businessNewsUrl);
     newsBloc..getSportsNews();
   }
 
@@ -48,36 +49,7 @@ class _BusinessNewsScreenState extends State<BusinessNewsScreen> {
                 SizedBox(
                   height: 20.0,
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 300.0,
-                  child: StreamBuilder<NewsResponse>(
-                    stream: newsBloc.businessSubject.stream,
-                    builder: (context, AsyncSnapshot<NewsResponse> snapShot) =>
-                        snapShot.hasData == true
-                            ? ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                itemCount: snapShot.data.newsList == null
-                                    ? 0
-                                    : snapShot.data.newsList.length,
-                                itemBuilder: (_, int index) => NewsItem(
-                                  newsTitle: snapShot.data.newsList[index].title,
-                                  newsPoster: snapShot.data.newsList[index].urlToImage,
-                                ),
-                              )
-                            : ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                scrollDirection: Axis.horizontal,
-                                itemCount: 5,
-                                itemBuilder: (_, int index) => NewsItem(
-                                  newsTitle: 'Loading',
-                                  newsPoster:
-                                      'https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif',
-                                ),
-                              ),
-                  ),
-                ),
+                NewsSection(stream: newsBloc.businessSubject.stream),
                 SizedBox(
                   height: 30.0,
                 ),
@@ -85,36 +57,7 @@ class _BusinessNewsScreenState extends State<BusinessNewsScreen> {
                 SizedBox(
                   height: 20.0,
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 300.0,
-                  child: StreamBuilder<NewsResponse>(
-                    stream: newsBloc.sportsSubject.stream,
-                    builder: (context, AsyncSnapshot<NewsResponse> snapShot) =>
-                    snapShot.hasData == true
-                        ? ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapShot.data.newsList == null
-                          ? 0
-                          : snapShot.data.newsList.length,
-                      itemBuilder: (_, int index) => NewsItem(
-                        newsTitle: snapShot.data.newsList[index].title,
-                        newsPoster: snapShot.data.newsList[index].urlToImage,
-                      ),
-                    )
-                        : ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      itemBuilder: (_, int index) => NewsItem(
-                        newsTitle: 'Loading',
-                        newsPoster:
-                        'https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif',
-                      ),
-                    ),
-                  ),
-                )
+                NewsSection(stream: newsBloc.sportsSubject.stream),
               ],
             ),
           ),
@@ -123,6 +66,56 @@ class _BusinessNewsScreenState extends State<BusinessNewsScreen> {
     );
   }
 }
+
+class NewsSection extends StatelessWidget {
+
+  final Stream stream;
+
+  const NewsSection({Key key, @required this.stream}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 300.0,
+      child: StreamBuilder<NewsResponse>(
+        stream: stream,
+        builder: (context, AsyncSnapshot<NewsResponse> snapShot) =>
+        snapShot.hasData == true
+            ? ListView.builder(
+          physics: BouncingScrollPhysics(),
+          scrollDirection: Axis.horizontal,
+          itemCount: snapShot.data.newsList == null
+              ? 0
+              : snapShot.data.newsList.length,
+          itemBuilder: (_, int index) => NewsItem(
+            newsTitle: snapShot.data.newsList[index].title,
+            newsPoster: snapShot.data.newsList[index].urlToImage,
+          ),
+        )
+            : NewsLoader(),
+      ),
+    );
+  }
+}
+
+class NewsLoader extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      physics: BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      itemCount: 5,
+      itemBuilder: (_, int index) => NewsItem(
+        newsTitle: 'Loading',
+        newsPoster:
+        'https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif',
+      ),
+    );
+  }
+}
+
+
 
 class TitleWidget extends StatelessWidget {
   final String title;

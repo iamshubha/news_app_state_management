@@ -1,22 +1,21 @@
+import 'package:flutterapp/assets/url.dart';
 import 'package:flutterapp/logic/news_response.dart';
 import 'package:flutterapp/logic/respository/news_repository.dart';
 import 'package:rxdart/subjects.dart';
 
 class NewsBloc{
 
-  final businessNewsUrl =
-      'https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=3fc464c420834d6fb76899f176e1ae6d';
-
-  final sportsNewsUrl =
-      'https://newsapi.org/v2/top-headlines?country=in&category=sports&apiKey=3fc464c420834d6fb76899f176e1ae6d';
-
   final NewsRepository _newsRepository = NewsRepository();
 
   final BehaviorSubject<NewsResponse> _businessNewsSubject = BehaviorSubject<NewsResponse>();
   final BehaviorSubject<NewsResponse> _sportsNewsSubject = BehaviorSubject<NewsResponse>();
+  final BehaviorSubject<NewsResponse> _scienceNewsSubject = BehaviorSubject<NewsResponse>();
+  final BehaviorSubject<NewsResponse> _healthNewsSubject = BehaviorSubject<NewsResponse>();
+  final BehaviorSubject<NewsResponse> _technologyNewsSubject = BehaviorSubject<NewsResponse>();
+  final BehaviorSubject<NewsResponse> _entertainmentNewsSubject = BehaviorSubject<NewsResponse>();
 
-  getBusinessNews() async {
-    NewsResponse newsResponse = await _newsRepository.getNews(businessNewsUrl);
+  getNews(String newsUrl) async {
+    NewsResponse newsResponse = await _newsRepository.getNews(newsUrl);
     _businessNewsSubject.sink.add(newsResponse);
   }
 
@@ -28,6 +27,10 @@ class NewsBloc{
   dispose() {
     _businessNewsSubject.close();
     _sportsNewsSubject.close();
+    _scienceNewsSubject.close();
+    _healthNewsSubject.close();
+    _technologyNewsSubject.close();
+    _entertainmentNewsSubject.close();
   }
 
   BehaviorSubject<NewsResponse> get businessSubject => _businessNewsSubject;
