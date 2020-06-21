@@ -12,17 +12,64 @@ class NewsScreen extends StatelessWidget {
         body: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                TitleWidget(title: 'General'),
-                TitleWidget(title: 'Business'),
-                TitleWidget(title: 'Sports'),
-                TitleWidget(title: 'Health'),
-                TitleWidget(title: 'Science'),
-                TitleWidget(title: 'Fashion'),
-              ],
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TitleWidget(title: 'Business'),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 140.0,
+                    child: news == null
+                        ? Center(
+                            child: Text('Loading'),
+                          )
+                        : Container(
+                      height: 400.0,
+                          width: MediaQuery.of(context).size.width,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: news.length == null ? 0 : news.length,
+                              itemBuilder: (_, int index) => Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Card(
+                                  elevation: 20.0,
+                                  child: Container(
+                                    width: 200.0,
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 400.0,
+                                          child: news[index].urlToImage == null
+                                              ? Image.network(
+                                                  'https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif',
+                                                  fit: BoxFit.fill,
+
+                                                )
+                                              : Image.network(
+                                                  news[index].urlToImage,
+                                                  fit: BoxFit.contain,
+                                                  scale: 2.0,
+                                                ),
+                                        ),
+                                        SizedBox(
+                                          height: 20.0,
+                                        ),
+                                        Text(news[index].title),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
