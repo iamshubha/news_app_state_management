@@ -16,12 +16,20 @@ class NewsBloc{
 
   getNews(String newsUrl) async {
     NewsResponse newsResponse = await _newsRepository.getNews(newsUrl);
-    _businessNewsSubject.sink.add(newsResponse);
-  }
 
-  getSportsNews() async{
-    NewsResponse newsResponse =  await _newsRepository.getNews(sportsNewsUrl);
-    _sportsNewsSubject.sink.add(newsResponse);
+    if(newsUrl == businessNewsUrl) {
+      _businessNewsSubject.sink.add(newsResponse);
+    }else if(newsUrl == sportsNewsUrl){
+      _sportsNewsSubject.sink.add(newsResponse);
+    }else if(newsUrl == scienceNewsUrl){
+      _scienceNewsSubject.sink.add(newsResponse);
+    }else if(newsUrl == healthNewsUrl){
+      _healthNewsSubject.sink.add(newsResponse);
+    }else if(newsUrl == technologyNewsUrl){
+      _technologyNewsSubject.sink.add(newsResponse);
+    }else if(newsUrl == entertainmentNewsUrl){
+      _entertainmentNewsSubject.sink.add(newsResponse);
+    }
   }
 
   dispose() {
@@ -35,6 +43,10 @@ class NewsBloc{
 
   BehaviorSubject<NewsResponse> get businessSubject => _businessNewsSubject;
   BehaviorSubject<NewsResponse> get sportsSubject => _sportsNewsSubject;
+  BehaviorSubject<NewsResponse> get scienceSubject => _scienceNewsSubject;
+  BehaviorSubject<NewsResponse> get healthSubject => _healthNewsSubject;
+  BehaviorSubject<NewsResponse> get technologySubject => _technologyNewsSubject;
+  BehaviorSubject<NewsResponse> get entertainmentSubject => _entertainmentNewsSubject;
 }
 
 final newsBloc = NewsBloc();

@@ -15,7 +15,11 @@ class _BusinessNewsScreenState extends State<BusinessNewsScreen> {
   void initState() {
     super.initState();
     newsBloc..getNews(businessNewsUrl);
-    newsBloc..getSportsNews();
+    newsBloc..getNews(sportsNewsUrl);
+    newsBloc..getNews(scienceNewsUrl);
+    newsBloc..getNews(healthNewsUrl);
+    newsBloc..getNews(technologyNewsUrl);
+    newsBloc..getNews(entertainmentNewsUrl);
   }
 
   @override
@@ -58,6 +62,41 @@ class _BusinessNewsScreenState extends State<BusinessNewsScreen> {
                   height: 20.0,
                 ),
                 NewsSection(stream: newsBloc.sportsSubject.stream),
+                SizedBox(
+                  height: 30.0,
+                ),
+                SizedBox(
+                  height: 30.0,
+                ),
+                TitleWidget(title: 'Science'),
+                SizedBox(
+                  height: 20.0,
+                ),
+                NewsSection(stream: newsBloc.scienceSubject.stream),
+                SizedBox(
+                  height: 30.0,
+                ),
+                TitleWidget(title: 'Health'),
+                SizedBox(
+                  height: 20.0,
+                ),
+                NewsSection(stream: newsBloc.healthSubject.stream),
+                SizedBox(
+                  height: 30.0,
+                ),
+                TitleWidget(title: 'Technology'),
+                SizedBox(
+                  height: 20.0,
+                ),
+                NewsSection(stream: newsBloc.technologySubject.stream),
+                SizedBox(
+                  height: 30.0,
+                ),
+                TitleWidget(title: 'Entertainment'),
+                SizedBox(
+                  height: 20.0,
+                ),
+                NewsSection(stream: newsBloc.entertainmentSubject.stream),
               ],
             ),
           ),
