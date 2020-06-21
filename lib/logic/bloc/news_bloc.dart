@@ -4,20 +4,33 @@ import 'package:rxdart/subjects.dart';
 
 class NewsBloc{
 
-  final NewsRepository _newsRepository = NewsRepository();
-  final BehaviorSubject<NewsResponse> _newsSubject = BehaviorSubject<
-      NewsResponse>();
+  final businessNewsUrl =
+      'https://newsapi.org/v2/top-headlines?country=in&category=business&apiKey=3fc464c420834d6fb76899f176e1ae6d';
 
-  getNews() async {
-    NewsResponse newsResponse = await _newsRepository.getBusinessNews();
-    _newsSubject.sink.add(newsResponse);
+  final sportsNewsUrl =
+      'https://newsapi.org/v2/top-headlines?country=in&category=sports&apiKey=3fc464c420834d6fb76899f176e1ae6d';
+
+  final NewsRepository _newsRepository = NewsRepository();
+
+  final BehaviorSubject<NewsResponse> _businessNewsSubject = BehaviorSubject<NewsResponse>();
+  final BehaviorSubject<NewsResponse> _sportsNewsSubject = BehaviorSubject<NewsResponse>();
+
+  getBusinessNews() async {
+    NewsResponse newsResponse = await _newsRepository.getNews(businessNewsUrl);
+    _businessNewsSubject.sink.add(newsResponse);
+  }
+
+  getSportsNews() async{
+    NewsResponse newsResponse =  await _newsRepository.getNews(sportsNewsUrl);
+    _sportsNewsSubject.sink.add(newsResponse);
   }
 
   dispose() {
-    _newsSubject.close();
+    _businessNewsSubject.close();
   }
 
-  BehaviorSubject<NewsResponse> get subject => _newsSubject;
+  BehaviorSubject<NewsResponse> get businessSubject => _businessNewsSubject;
+  BehaviorSubject<NewsResponse> get sportsSubject => _sportsNewsSubject;
 }
 
 final newsBloc = NewsBloc();

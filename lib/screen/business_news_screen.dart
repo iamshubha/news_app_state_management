@@ -13,7 +13,8 @@ class _BusinessNewsScreenState extends State<BusinessNewsScreen> {
   @override
   void initState() {
     super.initState();
-    newsBloc..getNews();
+    newsBloc..getBusinessNews();
+    newsBloc..getSportsNews();
   }
 
   @override
@@ -37,45 +38,85 @@ class _BusinessNewsScreenState extends State<BusinessNewsScreen> {
           ),
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TitleWidget(title: 'Business'),
-              SizedBox(
-                height: 20.0,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 300.0,
-                child: StreamBuilder<NewsResponse>(
-                  stream: newsBloc.subject.stream,
-                  builder: (context, AsyncSnapshot<NewsResponse> snapShot) =>
-                      snapShot.hasData == true
-                          ? ListView.builder(
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: snapShot.data.newsList == null
-                                  ? 0
-                                  : snapShot.data.newsList.length,
-                              itemBuilder: (_, int index) => NewsItem(
-                                newsTitle: snapShot.data.newsList[index].title,
-                                newsPoster: snapShot.data.newsList[index].urlToImage,
-                              ),
-                            )
-                          : ListView.builder(
-                              physics: BouncingScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: 5,
-                              itemBuilder: (_, int index) => NewsItem(
-                                newsTitle: 'Loading',
-                                newsPoster:
-                                    'https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif',
-                              ),
-                            ),
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TitleWidget(title: 'Business'),
+                SizedBox(
+                  height: 20.0,
                 ),
-              ),
-            ],
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 300.0,
+                  child: StreamBuilder<NewsResponse>(
+                    stream: newsBloc.businessSubject.stream,
+                    builder: (context, AsyncSnapshot<NewsResponse> snapShot) =>
+                        snapShot.hasData == true
+                            ? ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: snapShot.data.newsList == null
+                                    ? 0
+                                    : snapShot.data.newsList.length,
+                                itemBuilder: (_, int index) => NewsItem(
+                                  newsTitle: snapShot.data.newsList[index].title,
+                                  newsPoster: snapShot.data.newsList[index].urlToImage,
+                                ),
+                              )
+                            : ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 5,
+                                itemBuilder: (_, int index) => NewsItem(
+                                  newsTitle: 'Loading',
+                                  newsPoster:
+                                      'https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif',
+                                ),
+                              ),
+                  ),
+                ),
+                SizedBox(
+                  height: 30.0,
+                ),
+                TitleWidget(title: 'Sports'),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 300.0,
+                  child: StreamBuilder<NewsResponse>(
+                    stream: newsBloc.sportsSubject.stream,
+                    builder: (context, AsyncSnapshot<NewsResponse> snapShot) =>
+                    snapShot.hasData == true
+                        ? ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapShot.data.newsList == null
+                          ? 0
+                          : snapShot.data.newsList.length,
+                      itemBuilder: (_, int index) => NewsItem(
+                        newsTitle: snapShot.data.newsList[index].title,
+                        newsPoster: snapShot.data.newsList[index].urlToImage,
+                      ),
+                    )
+                        : ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 5,
+                      itemBuilder: (_, int index) => NewsItem(
+                        newsTitle: 'Loading',
+                        newsPoster:
+                        'https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif',
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
