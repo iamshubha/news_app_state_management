@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/logic/bloc/news_bloc.dart';
-import 'package:flutterapp/screen/business_news_screen.dart';
+import 'package:flutterapp/screen/news_screen.dart';
 import 'package:provider/provider.dart';
 
 main() => runApp(
@@ -15,6 +15,6 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context) => FutureProvider(
      lazy: true,
       create: (BuildContext context) => NewsBloc().loadUserData(),
-      child: BusinessNewsScreen(),
+      child: NewsScreen(),
     );
 }
